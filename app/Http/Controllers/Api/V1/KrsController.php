@@ -14,7 +14,7 @@ class KrsController extends Controller
      */
     public function index()
     {
-        //
+        Return Krs::all();
     }
 
     /**

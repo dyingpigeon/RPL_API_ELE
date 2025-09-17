@@ -14,7 +14,7 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        //
+        Return Jadwal::all();
     }
 
     /**
