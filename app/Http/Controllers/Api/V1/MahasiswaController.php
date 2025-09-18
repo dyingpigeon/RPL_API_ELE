@@ -14,7 +14,7 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        Return Mahasiswa::all();
+        return Mahasiswa::all();
     }
 
     /**

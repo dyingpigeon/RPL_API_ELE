@@ -16,7 +16,7 @@ class DosenController extends Controller
      */
     public function index()
     {
-        Return Dosen::all();
+        return Dosen::all();
     }
 
     /**
@@ -32,16 +32,17 @@ class DosenController extends Controller
      */
     public function store(StoreDosenRequest $request)
     {
-        //
+        $dosen = Dosen::create($request->validated());
+        return response()->json($dosen, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Dosen $dosen)
-    {
-        //
-    }
+public function show(Dosen $dosen)
+{
+    return response()->json($dosen);
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -54,16 +55,17 @@ class DosenController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDosenRequest $request, Dosen $dosen)
-    {
-        //
-    }
-
+public function update(UpdateDosenRequest $request, Dosen $dosen)
+{
+    $dosen->update($request->validated());
+    return response()->json($dosen);
+}
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dosen $dosen)
-    {
-        //
-    }
+public function destroy(Dosen $dosen)
+{
+    $dosen->delete();
+    return response()->json(null, 204);
+}
 }

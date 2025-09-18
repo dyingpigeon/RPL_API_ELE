@@ -14,7 +14,7 @@ class MataKuliahController extends Controller
      */
     public function index()
     {
-        Return MataKuliah::all();
+        return MataKuliah::all();
     }
 
     /**
