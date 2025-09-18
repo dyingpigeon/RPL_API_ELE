@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\AdminResource;
 
 
 class AdminController extends Controller
@@ -31,7 +32,7 @@ class AdminController extends Controller
      */
     public function store(StoreAdminRequest $request)
     {
-        //
+        
     }
 
     /**
@@ -39,7 +40,7 @@ class AdminController extends Controller
      */
     public function show(Admin $admin)
     {
-        //
+        return new AdminResource($admin);
     }
 
     /**

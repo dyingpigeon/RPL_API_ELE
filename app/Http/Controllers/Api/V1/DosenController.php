@@ -6,7 +6,7 @@ use App\Models\Dosen;
 use App\Http\Requests\StoreDosenRequest;
 use App\Http\Requests\UpdateDosenRequest;
 use App\Http\Controllers\Controller;
-use PhpParser\Node\Stmt\Return_;
+use App\Http\Resources\V1\DosenResource;
 
 
 class DosenController extends Controller
@@ -40,9 +40,9 @@ class DosenController extends Controller
      * Display the specified resource.
      */
 public function show(Dosen $dosen)
-{
-    return response()->json($dosen);
-}
+    {
+        return new DosenResource($dosen);
+    }
 
     /**
      * Show the form for editing the specified resource.

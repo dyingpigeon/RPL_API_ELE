@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Resources\V1\JadwalResource;
 use App\Models\Jadwal;
 use App\Http\Requests\StoreJadwalRequest;
 use App\Http\Controllers\Controller;
@@ -38,7 +39,7 @@ class JadwalController extends Controller
      */
     public function show(Jadwal $jadwal)
     {
-        //
+        return new JadwalResource($jadwal);
     }
 
     /**

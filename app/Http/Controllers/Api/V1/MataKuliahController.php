@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Resources\V1\MataKuliahResource;
 use App\Models\MataKuliah;
 use App\Http\Requests\StoreMataKuliahRequest;
 use App\Http\Requests\UpdateMataKuliahRequest;
@@ -36,9 +37,9 @@ class MataKuliahController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(MataKuliah $mataKuliah)
+    public function show(MataKuliah $matakuliah)
     {
-        //
+        return new MataKuliahResource($matakuliah);
     }
 
     /**

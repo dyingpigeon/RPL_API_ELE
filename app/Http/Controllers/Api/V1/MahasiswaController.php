@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Resources\V1\MahasiswaResource;
 use App\Models\Mahasiswa;
 use App\Http\Requests\StoreMahasiswaRequest;
 use App\Http\Controllers\Controller;
@@ -38,7 +39,7 @@ class MahasiswaController extends Controller
      */
     public function show(Mahasiswa $mahasiswa)
     {
-        //
+        return new MahasiswaResource($mahasiswa);
     }
 
     /**
