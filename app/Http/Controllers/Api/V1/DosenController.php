@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Dosen;
-use App\Http\Requests\StoreDosenRequest;
-use App\Http\Requests\UpdateDosenRequest;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreDosenRequest;
 use App\Http\Resources\V1\DosenResource;
+use App\Http\Requests\UpdateDosenRequest;
 
 
 class DosenController extends Controller
@@ -14,9 +15,21 @@ class DosenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Dosen::all();
+        $query = Dosen::query();
+
+        // filter berdasarkan nama
+        if ($request->has('nama')) {
+            $query->where('nama', 'like', '%' . $request->nama . '%');
+        }
+
+        // filter berdasarkan nim
+        if ($request->has('nip')) {
+            $query->where('nip', $request->nip);
+        }
+
+        return DosenResource::collection($query->paginate(10));// return semua hasil
     }
 
     /**

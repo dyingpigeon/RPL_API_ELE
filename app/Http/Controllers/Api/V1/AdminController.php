@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Admin;
-use App\Http\Requests\StoreAdminRequest;
-use App\Http\Requests\UpdateAdminRequest;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAdminRequest;
 use App\Http\Resources\V1\AdminResource;
+use App\Http\Requests\UpdateAdminRequest;
 
 
 class AdminController extends Controller
@@ -14,9 +15,16 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Admin::all();
+        $query = Admin::query();
+
+        // filter berdasarkan nama
+        if ($request->has('nama')) {
+            $query->where('nama', 'like', '%' . $request->nama . '%');
+        }
+
+        return AdminResource::collection($query->paginate(10));// return semua hasil
     }
 
     /**

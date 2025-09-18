@@ -7,16 +7,34 @@ use App\Models\Mahasiswa;
 use App\Http\Requests\StoreMahasiswaRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateMahasiswaRequest;
+use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Mahasiswa::all();
+        $query = Mahasiswa::query();
+
+        // filter berdasarkan nama
+        if ($request->has('nama')) {
+            $query->where('nama', 'like', '%' . $request->nama . '%');
+        }
+
+        if ($request->has('prodi')) {
+            $query->where('prodi', 'like', '%' . $request->prodi . '%');
+        }
+
+        // filter berdasarkan nim
+        if ($request->has('nim')) {
+            $query->where('nim', $request->nim);
+        }
+
+        return MahasiswaResource::collection($query->paginate(10));// return semua hasil
     }
+
 
     /**
      * Show the form for creating a new resource.

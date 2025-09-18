@@ -2,20 +2,28 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Resources\V1\MataKuliahResource;
 use App\Models\MataKuliah;
-use App\Http\Requests\StoreMataKuliahRequest;
-use App\Http\Requests\UpdateMataKuliahRequest;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreMataKuliahRequest;
+use App\Http\Resources\V1\MataKuliahResource;
+use App\Http\Requests\UpdateMataKuliahRequest;
 
 class MataKuliahController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return MataKuliah::all();
+        $query = MataKuliah::query();
+
+        // filter berdasarkan nama
+        if ($request->has('matkul')) {
+            $query->where('mata_kuliah', 'like', '%' . $request->matkul . '%');
+        }
+
+        return MataKuliahResource::collection($query->paginate(10));// return semua hasil
     }
 
     /**
