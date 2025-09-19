@@ -10,6 +10,11 @@ class MataKuliah extends Model
     /** @use HasFactory<\Database\Factories\MataKuliahFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'mataKuliah',
+        'sks',
+    ];
+
 public function jadwal()
 {
     return $this->hasMany(Jadwal::class, 'id_matkul', 'id_matkul');

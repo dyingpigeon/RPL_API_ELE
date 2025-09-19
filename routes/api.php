@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\JadwalController;
 use App\Http\Controllers\Api\V1\KrsController;
 use App\Http\Controllers\Api\V1\MahasiswaController;
 use App\Http\Controllers\Api\V1\MataKuliahController;
+use App\Http\Controllers\Api\V1\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AdminController;
@@ -21,4 +22,6 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('krs', KrsController::class);
     Route::apiResource('mahasiswa', MahasiswaController::class);
     Route::apiResource('matakuliah', MataKuliahController::class);
+    Route::post('/registrasi', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
 });

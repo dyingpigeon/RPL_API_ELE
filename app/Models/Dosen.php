@@ -10,6 +10,13 @@ class Dosen extends Model
     /** @use HasFactory<\Database\Factories\DosenFactory> */
     use HasFactory;
 
+    protected $fillable = [
+    'user_id',
+    // 'nip',
+    'nama',
+];
+
+
     public function user()
 {
     return $this->belongsTo(User::class);

@@ -10,6 +10,13 @@ class Mahasiswa extends Model
     /** @use HasFactory<\Database\Factories\MahasiswaFactory> */
     use HasFactory;
 
+        protected $fillable = [
+        'user_id',
+        // 'nim',
+        'nama',
+        // 'prodi',
+    ];
+
     public function user()
 {
     return $this->belongsTo(User::class);

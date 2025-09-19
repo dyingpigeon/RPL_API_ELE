@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreKrsRequest extends FormRequest
+class StoreMataKuliahRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class StoreKrsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-        ];
+            'mataKuliah' => ['required'],
+            'sks' => ['required'],
+                ];
+    }
+
+    protected function prepareForValidation() {
+        $this->merge([
+            'mata_kuliah' => $this->mataKuliah
+        ]);
     }
 }

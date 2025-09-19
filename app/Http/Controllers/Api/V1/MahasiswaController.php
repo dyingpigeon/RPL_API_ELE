@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Resources\V1\MahasiswaResource;
 use App\Models\Mahasiswa;
-use App\Http\Requests\StoreMahasiswaRequest;
+use App\Http\Requests\V1\StoreMahasiswaRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateMahasiswaRequest;
 use Illuminate\Http\Request;
@@ -49,7 +49,7 @@ class MahasiswaController extends Controller
      */
     public function store(StoreMahasiswaRequest $request)
     {
-        //
+        return new MahasiswaResource(Mahasiswa::create($request->all()));
     }
 
     /**

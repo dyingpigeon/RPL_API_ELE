@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreMataKuliahRequest;
+use App\Http\Requests\V1\StoreMataKuliahRequest;
 use App\Http\Resources\V1\MataKuliahResource;
 use App\Http\Requests\UpdateMataKuliahRequest;
 
@@ -39,7 +39,7 @@ class MataKuliahController extends Controller
      */
     public function store(StoreMataKuliahRequest $request)
     {
-        //
+        return new MataKuliahResource(MataKuliah::created($request->all()));
     }
 
     /**

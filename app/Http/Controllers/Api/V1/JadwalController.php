@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Jadwal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreJadwalRequest;
+use App\Http\Requests\V1\StoreJadwalRequest;
 use App\Http\Resources\V1\JadwalResource;
 use App\Http\Requests\UpdateJadwalRequest;
 
@@ -73,7 +73,7 @@ class JadwalController extends Controller
      */
     public function store(StoreJadwalRequest $request)
     {
-        //
+        return new JadwalResource(Jadwal::create($request->all()));
     }
 
     /**

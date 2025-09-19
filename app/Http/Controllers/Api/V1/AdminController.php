@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAdminRequest;
+use App\Http\Requests\V1\StoreAdminRequest;
 use App\Http\Resources\V1\AdminResource;
 use App\Http\Requests\UpdateAdminRequest;
 
@@ -33,14 +33,14 @@ class AdminController extends Controller
     public function create()
     {
         //
-    }
+    } 
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreAdminRequest $request)
     {
-        
+        return new AdminResource(Admin::create($request->all()));
     }
 
     /**

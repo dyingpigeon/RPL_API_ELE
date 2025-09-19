@@ -10,6 +10,17 @@ class Jadwal extends Model
     /** @use HasFactory<\Database\Factories\JadwalFactory> */
     use HasFactory;
 
+        protected $fillable = [
+        'hari',
+        'jam_mulai',
+        'jam_selesai',
+        'ruangan',
+        'id_dosen',
+        'id_matkul',
+        'semester',
+        'kelas',
+    ];
+
     public function dosen()
 {
     return $this->belongsTo(Dosen::class, 'nip', 'nip');
