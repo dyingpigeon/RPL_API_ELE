@@ -63,8 +63,14 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Admin $admin)
+    public function destroy($id)
     {
-        //
+        $admin = Admin::findOrFail($id);
+        $admin->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Admin berhasil dihapus',
+        ], 200);
     }
 }

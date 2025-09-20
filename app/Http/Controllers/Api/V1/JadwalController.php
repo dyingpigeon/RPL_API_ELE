@@ -96,8 +96,14 @@ class JadwalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Jadwal $jadwal)
+    public function destroy($id)
     {
-        //
+        $jadwal = Jadwal::findOrFail($id);
+        $jadwal->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Jadwal berhasil dihapus',
+        ], 200);
     }
 }

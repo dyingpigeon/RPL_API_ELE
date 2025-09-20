@@ -59,8 +59,14 @@ class MataKuliahController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MataKuliah $mataKuliah)
+    public function destroy($id)
     {
-        //
+        $matakuliah = MataKuliah::findOrFail($id);
+        $matakuliah->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Mata Kuliah berhasil dihapus',
+        ], 200);
     }
 }

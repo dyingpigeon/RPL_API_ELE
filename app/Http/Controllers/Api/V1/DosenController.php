@@ -76,9 +76,14 @@ class DosenController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dosen $dosen)
+    public function destroy($id)
     {
+        $dosen = Dosen::findOrFail($id);
         $dosen->delete();
-        return response()->json(null, 204);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Dosen berhasil dihapus',
+        ], 200);
     }
 }
