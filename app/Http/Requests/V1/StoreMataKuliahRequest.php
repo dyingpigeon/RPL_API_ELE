@@ -24,10 +24,11 @@ class StoreMataKuliahRequest extends FormRequest
         return [
             'mataKuliah' => ['required'],
             'sks' => ['required'],
-                ];
+        ];
     }
 
-    protected function prepareForValidation() {
+    protected function prepareForValidation()
+    {
         $this->merge([
             'mata_kuliah' => $this->mataKuliah
         ]);

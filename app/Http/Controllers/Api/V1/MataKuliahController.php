@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreMataKuliahRequest;
 use App\Http\Resources\V1\MataKuliahResource;
-use App\Http\Requests\UpdateMataKuliahRequest;
+use App\Http\Requests\V1\UpdateMataKuliahRequest;
 
 class MataKuliahController extends Controller
 {
@@ -27,19 +27,11 @@ class MataKuliahController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreMataKuliahRequest $request)
     {
-        return new MataKuliahResource(MataKuliah::created($request->all()));
+        return new MataKuliahResource(MataKuliah::create($request->all()));
     }
 
     /**
@@ -51,19 +43,17 @@ class MataKuliahController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(MataKuliah $mataKuliah)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMataKuliahRequest $request, MataKuliah $mataKuliah)
+    public function update(UpdateMataKuliahRequest $request, MataKuliah $matakuliah)
     {
-        //
+        $matakuliah->update($request->all());
+        return new MataKuliahResource($matakuliah);
+
+        // $matakuliah->update($request->all());
+
+        // // Load ulang data fresh dari database
+        // return new MataKuliahResource($matakuliah->fresh());
     }
 
     /**

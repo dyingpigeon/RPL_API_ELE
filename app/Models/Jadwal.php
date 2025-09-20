@@ -10,7 +10,7 @@ class Jadwal extends Model
     /** @use HasFactory<\Database\Factories\JadwalFactory> */
     use HasFactory;
 
-        protected $fillable = [
+    protected $fillable = [
         'hari',
         'jam_mulai',
         'jam_selesai',
@@ -22,12 +22,12 @@ class Jadwal extends Model
     ];
 
     public function dosen()
-{
-    return $this->belongsTo(Dosen::class, 'nip', 'nip');
-}
+    {
+        return $this->belongsTo(Dosen::class, 'nip', 'nip');
+    }
 
-public function mataKuliah()
-{
-    return $this->belongsTo(MataKuliah::class, 'id_matkul', 'id_matkul');
-}
+    public function mataKuliah()
+    {
+        return $this->belongsTo(MataKuliah::class, 'id_matkul', 'id_matkul');
+    }
 }

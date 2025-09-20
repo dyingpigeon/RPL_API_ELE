@@ -16,8 +16,8 @@ class MataKuliahResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'mataKuliah' => $this->mata_kuliah,
-            'sks' => $this->sks
+            'mataKuliah' => $this->mata_kuliah ?? null,
+            'sks' => $this->sks,
         ];
     }
 }

@@ -11,13 +11,13 @@ class MataKuliah extends Model
     use HasFactory;
 
     protected $fillable = [
-        'mataKuliah',
+        'mata_kuliah',
         'sks',
     ];
 
 public function jadwal()
 {
-    return $this->hasMany(Jadwal::class, 'id_matkul', 'id_matkul');
+    return $this->hasMany(Jadwal::class, 'id_matkul', 'id');
 }
 
 }

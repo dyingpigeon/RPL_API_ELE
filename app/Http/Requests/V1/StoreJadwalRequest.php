@@ -22,18 +22,19 @@ class StoreJadwalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'hari'        => 'required|string',
-            'jamMulai'   => 'required|date_format:H:i',
-            'jamSelesai'=> 'required|date_format:H:i|after:jamMulai',
-            'ruangan'     => 'required|string',
-            'dosenId'    => 'required|integer|exists:dosens,id',
-            'matkulId'   => 'required|integer|exists:mata_kuliahs,id',
-            'semester'    => 'required|integer|min:1',
-            'kelas'       => 'required|string',
+            'hari' => 'required|string',
+            'jamMulai' => 'required|date_format:H:i',
+            'jamSelesai' => 'required|date_format:H:i|after:jamMulai',
+            'ruangan' => 'required|string',
+            'dosenId' => 'required|integer|exists:dosens,id',
+            'matkulId' => 'required|integer|exists:mata_kuliahs,id',
+            'semester' => 'required|integer|min:1',
+            'kelas' => 'required|string',
         ];
     }
 
-        protected function prepareForValidation() {
+    protected function prepareForValidation()
+    {
         $this->merge([
             'jam_mulai' => $this->jamMulai,
             'jam_selesai' => $this->jamSelesai,
