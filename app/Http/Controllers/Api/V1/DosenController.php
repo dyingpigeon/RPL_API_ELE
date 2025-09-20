@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDosenRequest;
 use App\Http\Resources\V1\DosenResource;
-use App\Http\Requests\UpdateDosenRequest;
+use App\Http\Requests\V1\UpdateDosenRequest;
 
 
 class DosenController extends Controller
@@ -52,7 +52,7 @@ class DosenController extends Controller
     /**
      * Display the specified resource.
      */
-public function show(Dosen $dosen)
+    public function show(Dosen $dosen)
     {
         return new DosenResource($dosen);
     }
@@ -68,17 +68,17 @@ public function show(Dosen $dosen)
     /**
      * Update the specified resource in storage.
      */
-public function update(UpdateDosenRequest $request, Dosen $dosen)
-{
-    $dosen->update($request->validated());
-    return response()->json($dosen);
-}
+    public function update(UpdateDosenRequest $request, Dosen $dosen)
+    {
+        $dosen->update($request->all());
+        return new DosenResource($dosen);
+    }
     /**
      * Remove the specified resource from storage.
      */
-public function destroy(Dosen $dosen)
-{
-    $dosen->delete();
-    return response()->json(null, 204);
-}
+    public function destroy(Dosen $dosen)
+    {
+        $dosen->delete();
+        return response()->json(null, 204);
+    }
 }

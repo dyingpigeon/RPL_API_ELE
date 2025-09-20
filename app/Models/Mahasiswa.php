@@ -12,9 +12,9 @@ class Mahasiswa extends Model
 
         protected $fillable = [
         'user_id',
-        // 'nim',
+        'nim',
         'nama',
-        // 'prodi',
+        'prodi',
     ];
 
     public function user()

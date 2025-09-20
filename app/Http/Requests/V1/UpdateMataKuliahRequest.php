@@ -37,15 +37,15 @@ class UpdateMataKuliahRequest extends FormRequest
         }
     }
 
-protected function prepareForValidation()
-{
-    // Hanya merge jika field ada di request
-    if ($this->has('mataKuliah')) {
-        $this->merge([
-            'mata_kuliah' => $this->mataKuliah
-        ]);
+    protected function prepareForValidation()
+    {
+        // Hanya merge jika field ada di request
+        if ($this->has('mataKuliah')) {
+            $this->merge([
+                'mata_kuliah' => $this->mataKuliah
+            ]);
+        }
+
+        // Jika hanya sks yang di-update, jangan merge mata_kuliah
     }
-    
-    // Jika hanya sks yang di-update, jangan merge mata_kuliah
-}
 }

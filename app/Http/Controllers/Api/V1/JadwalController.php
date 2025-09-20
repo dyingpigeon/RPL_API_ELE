@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreJadwalRequest;
 use App\Http\Resources\V1\JadwalResource;
-use App\Http\Requests\UpdateJadwalRequest;
+use App\Http\Requests\V1\UpdateJadwalRequest;
 
 class JadwalController extends Controller
 {
@@ -85,19 +85,12 @@ class JadwalController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Jadwal $jadwal)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateJadwalRequest $request, Jadwal $jadwal)
     {
-        //
+        $jadwal->update($request->all());
+        return new JadwalResource($jadwal);
     }
 
     /**

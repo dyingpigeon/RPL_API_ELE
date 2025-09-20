@@ -11,7 +11,7 @@ class UpdateDosenRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,18 @@ class UpdateDosenRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        $method = $this->method();
+
+        if ($method == 'PUT') {
+            return [
+                'nip' => ['required', 'string'],
+                'nama' => ['required', 'string'],
+            ];
+        } else {
+            return [
+                'nip' => ['sometimes', 'string'],
+                'nama' => ['sometimes', 'string'],
+            ];
+        }
     }
 }

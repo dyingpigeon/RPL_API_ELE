@@ -21,8 +21,16 @@ class UpdateAdminRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        $method = $this->method();
+
+        if ($method == 'PUT') {
+            return [
+
+            ];
+        } else{
+            return[
+
+            ];
+        }
     }
 }

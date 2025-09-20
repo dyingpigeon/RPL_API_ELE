@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\StoreAdminRequest;
 use App\Http\Resources\V1\AdminResource;
-use App\Http\Requests\UpdateAdminRequest;
+use App\Http\Requests\V1\UpdateAdminRequest;
 
 
 class AdminController extends Controller
@@ -33,7 +33,7 @@ class AdminController extends Controller
     public function create()
     {
         //
-    } 
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -52,19 +52,12 @@ class AdminController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Admin $admin)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateAdminRequest $request, Admin $admin)
     {
-        //
+        $admin->update($request->all());
+        return new AdminResource($admin);
     }
 
     /**

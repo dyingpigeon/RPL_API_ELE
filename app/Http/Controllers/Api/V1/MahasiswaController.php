@@ -6,7 +6,7 @@ use App\Http\Resources\V1\MahasiswaResource;
 use App\Models\Mahasiswa;
 use App\Http\Requests\V1\StoreMahasiswaRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateMahasiswaRequest;
+use App\Http\Requests\V1\UpdateMahasiswaRequest;
 use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
@@ -61,19 +61,12 @@ class MahasiswaController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Mahasiswa $mahasiswa)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateMahasiswaRequest $request, Mahasiswa $mahasiswa)
     {
-        //
+        $mahasiswa->update($request->all());
+        return new MahasiswaResource($mahasiswa);
     }
 
     /**
