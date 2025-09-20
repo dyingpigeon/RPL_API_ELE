@@ -9,3 +9,5 @@ misal "127.0.0.1:8000/api/vi/mahasiswa"
 jika ingin mencari menggunakan id "127.0.0.1:8000/api/vi/mahasiswa/'id'"
 jika ingin mencari berdasarkan nama field bisa menggunakan "?nama='nama'"
 contohnya "127.0.0.1:8000/api/vi/mahasiswa?nama=jes"
+
+get dan post sudah selesai
