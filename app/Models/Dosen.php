@@ -11,19 +11,27 @@ class Dosen extends Model
     use HasFactory;
 
     protected $fillable = [
-    'user_id',
-    'nip',
-    'nama',
-];
+        'user_id',
+        'nip',
+        'nama',
+    ];
 
 
     public function user()
-{
-    return $this->belongsTo(User::class);
-}
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function tugas()
+    {
+        return $this->hasMany(Tugas::class);
+    }
 
-public function jadwal()
-{
-    return $this->hasMany(Jadwal::class, 'nip', 'nip');
-}
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwal::class, 'nip', 'nip');
+    }
+    public function postingan()
+    {
+        return $this->hasMany(Jadwal::class, 'nip', 'nip');
+    }
 }

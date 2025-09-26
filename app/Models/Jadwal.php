@@ -30,4 +30,11 @@ class Jadwal extends Model
     {
         return $this->belongsTo(MataKuliah::class, 'id_matkul', 'id_matkul');
     }
+
+        public function tugas()
+    {
+        return $this->hasMany(Tugas::class, 'id_jadwal', 'id_jadwal');
+    }
+
+
 }

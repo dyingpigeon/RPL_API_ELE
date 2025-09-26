@@ -15,9 +15,9 @@ class MataKuliah extends Model
         'sks',
     ];
 
-public function jadwal()
-{
-    return $this->hasMany(Jadwal::class, 'id_matkul', 'id');
-}
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwal::class, 'id_matkul', 'id');
+    }
 
 }

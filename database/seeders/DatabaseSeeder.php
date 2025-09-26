@@ -26,5 +26,8 @@ class DatabaseSeeder extends Seeder
             \App\Models\Dosen::factory(5)->create();
             \App\Models\MataKuliah::factory(10)->create();
             \App\Models\Jadwal::factory(20)->create();
+            \App\Models\Postingan::factory(20)->create();
+            \App\Models\Tugas::factory(20)->create();
+            \App\Models\Submisi::factory(20)->create();
     }
 }

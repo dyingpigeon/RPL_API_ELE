@@ -10,7 +10,7 @@ class Mahasiswa extends Model
     /** @use HasFactory<\Database\Factories\MahasiswaFactory> */
     use HasFactory;
 
-        protected $fillable = [
+    protected $fillable = [
         'user_id',
         'nim',
         'nama',
@@ -18,9 +18,13 @@ class Mahasiswa extends Model
     ];
 
     public function user()
-{
-    return $this->belongsTo(User::class);
-}
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function submisi()
+    {
+        return $this->hasMany(Submisi::class);
+    }
 
 
 }

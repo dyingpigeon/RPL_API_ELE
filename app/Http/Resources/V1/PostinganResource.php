@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MahasiswaResource extends JsonResource
+class PostinganResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,13 +16,9 @@ class MahasiswaResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'userId' => $this->user_id,
-            'nim' => $this->nim,
-            'nama' => $this->nama,
-            'prodi' => $this->prodi,
-            'diploma' => $this->diploma ?? null,
-            'tahunMasuk' => $this->tahun_masuk ?? null,
-            'nomorProdi' => $this->nomor_prodi ?? null,
+            'dosenId' => $this->dosen_id,  // foreign key ke dosen
+            'caption' => $this->caption ?? null,
+            'imageUrl' => $this->image_url ?? null,
         ];
     }
 }

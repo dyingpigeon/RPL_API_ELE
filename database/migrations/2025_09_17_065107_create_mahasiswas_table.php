@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('nim')->nullable()->unique(); 
             $table->string('nama');
             $table->string('prodi')->nullable();
+            $table->string('diploma')->nullable();       // d1, d2, d3
+            $table->year('tahun_masuk')->nullable();     // tahun masuk
+            $table->integer('nomor_prodi')->nullable();  // nomor/id prodi
             $table->timestamps();
         });
     }
