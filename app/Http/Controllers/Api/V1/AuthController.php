@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,20 +17,20 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|max:255|unique:users',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|max:20|confirmed',
-            'role'     => 'required|in:admin,mahasiswa,dosen',
+            'role' => 'required|in:admin,mahasiswa,dosen',
         ]);
 
         // Buat user baru
         $user = User::create([
-            'name'              => $validated['name'],
-            'email'             => $validated['email'],
+            'name' => $validated['name'],
+            'email' => $validated['email'],
             'email_verified_at' => now(),
-            'password'          => Hash::make($validated['password']),
-            'role'              => $validated['role'],
-            'remember_token'    => Str::random(10),
+            'password' => Hash::make($validated['password']),
+            'role' => $validated['role'],
+            'remember_token' => Str::random(10),
         ]);
 
         // Buat data tambahan berdasarkan role
@@ -37,22 +38,22 @@ class AuthController extends Controller
             case 'mahasiswa':
                 \App\Models\Mahasiswa::create([
                     'user_id' => $user->id,
-                    'nama'    => $user->name,
+                    'nama' => $user->name,
                 ]);
                 break;
 
             case 'dosen':
                 \App\Models\Dosen::create([
                     'user_id' => $user->id,
-                    'nama'    => $user->name,
+                    'nama' => $user->name,
                 ]);
                 break;
         }
-
         return response()->json([
             'message' => 'User registered successfully',
-            'user'    => $user,
+            'user' => new UserResource($user),
         ], 201);
+
     }
 
     /**
@@ -62,14 +63,14 @@ class AuthController extends Controller
     {
         // Validasi input
         $credentials = $request->validate([
-            'email'    => 'required|string|email',
+            'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
 
         // Cek user
         $user = User::where('email', $credentials['email'])->first();
 
-        if (! $user || ! Hash::check($credentials['password'], $user->password)) {
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
             return response()->json([
                 'message' => 'Invalid credentials'
             ], 401);
@@ -80,8 +81,8 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Login success',
-            'user'    => $user,
-            'token'   => $token,
+            'user' => $user,
+            'token' => $token,
         ]);
     }
 }

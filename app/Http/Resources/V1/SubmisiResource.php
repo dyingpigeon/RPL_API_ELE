@@ -22,8 +22,6 @@ class SubmisiResource extends JsonResource
             'komentar' => $this->komentar ?? null,
             'selesai' => (bool) $this->selesai, // pastikan keluar boolean
             'nilai' => $this->nilai ?? null,
-            'createdAt' => $this->created_at?->toDateTimeString(),
-            'updatedAt' => $this->updated_at?->toDateTimeString(),
         ];
     }
 }
