@@ -16,7 +16,7 @@ class MahasiswaResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'userId' => $this->user_id,
+            // 'userId' => $this->user_id,
             'nim' => $this->nim,
             'nama' => $this->nama,
             'prodi' => $this->prodi,
