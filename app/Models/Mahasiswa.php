@@ -15,7 +15,11 @@ class Mahasiswa extends Model
         'nim',
         'nama',
         'prodi',
+        'diploma',
+        'tahun_masuk',
+        'nomor_prodi',
     ];
+
 
     public function user()
     {

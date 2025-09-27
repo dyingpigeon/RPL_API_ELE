@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\DosenResource;
+use App\Http\Resources\V1\MahasiswaResource;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -49,11 +51,11 @@ class AuthController extends Controller
                 ]);
                 break;
         }
+
         return response()->json([
             'message' => 'User registered successfully',
             'user' => new UserResource($user),
         ], 201);
-
     }
 
     /**
@@ -76,13 +78,34 @@ class AuthController extends Controller
             ], 401);
         }
 
-        // Untuk API biasanya bikin token (contoh pakai sanctum)
-        $token = $user->createToken('auth_token')->plainTextToken;
+        // // Untuk API biasanya bikin token (contoh pakai sanctum)
+        // $token = $user->createToken('auth_token')->plainTextToken;
+
+        // return response()->json([
+        //     'message' => 'Login success',
+        //     'user' => new UserResource($user),
+        //     'token' => $token,
+        // ]);
+
+        // ambil relasi data tambahan
+        $extraData = null;
+        if ($user->role === 'mahasiswa' && $user->mahasiswa) {
+            $extraData = new MahasiswaResource($user->mahasiswa);
+        } elseif ($user->role === 'dosen' && $user->dosen) {
+            $extraData = new DosenResource($user->dosen);
+        }
 
         return response()->json([
             'message' => 'Login success',
-            'user' => $user,
-            'token' => $token,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+            ],
+            $user->role => $extraData, // kunci JSON otomatis "mahasiswa" / "dosen"
+            'token' => $user->createToken('auth_token')->plainTextToken,
         ]);
+
     }
 }

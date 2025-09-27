@@ -19,28 +19,43 @@ class UpdateMahasiswaRequest extends FormRequest
             return [
                 'nim' => ['required', 'string'],
                 'nama' => ['required', 'string'],
-                'prodi' => ['required', 'string', 'in:TI,TRSE,TL'],
-                'diploma' => ['required', 'string', 'in:D3,D4'],
-                'tahunMasuk' => ['required', 'integer', 'min:2021', 'max:' . date('Y')],
-                'nomorProdi' => ['required', 'integer'],
             ];
         } else { // PATCH
             return [
                 'nim' => ['sometimes', 'string'],
                 'nama' => ['sometimes', 'string'],
-                'prodi' => ['sometimes', 'string', 'in:TI,TRSE,TL'],
-                'diploma' => ['sometimes', 'string', 'in:D3,D4'],
-                'tahunMasuk' => ['sometimes', 'integer', 'min:2021', 'max:' . date('Y')],
-                'nomorProdi' => ['sometimes', 'integer'],
             ];
         }
     }
 
     protected function prepareForValidation()
     {
+        if ($this->nim) {
+            // contoh NIM: 420221603123
+            $diploma = substr($this->nim, 0, 1);         // 4 atau 3
+            $tahunMasuk = substr($this->nim, 1, 4);      // 2021, 2022, dst
+            $nomorProdi = substr($this->nim, 5, 2);      // 16, 35, 03
+
+            // mapping nomor prodi ke nama prodi
+            $mapProdi = [
+                '35' => 'TRSE',
+                '16' => 'TI',
+                '03' => 'TL',
+            ];
+            $prodi = $mapProdi[$nomorProdi] ?? null;
+
+            $this->merge([
+                'diploma' => 'D' . $diploma,
+                'tahun_masuk' => (int) $tahunMasuk,
+                'nomor_prodi' => (int) $nomorProdi,
+                'prodi' => $prodi,
+            ]);
+        }
+
+        // sinkronkan penamaan agar sesuai DB
         $this->merge([
-            'tahun_masuk' => $this->tahunMasuk,
-            'nomor_prodi' => $this->nomorProdi,
+            'tahun_masuk' => $this->tahunMasuk ?? $this->tahun_masuk,
+            'nomor_prodi' => $this->nomorProdi ?? $this->nomor_prodi,
         ]);
     }
 }
