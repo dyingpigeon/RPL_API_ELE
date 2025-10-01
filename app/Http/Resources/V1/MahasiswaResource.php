@@ -23,6 +23,7 @@ class MahasiswaResource extends JsonResource
             'diploma' => $this->diploma ?? null,
             'tahunMasuk' => $this->tahun_masuk ?? null,
             'nomorProdi' => $this->nomor_prodi ?? null,
+            'kelas'=> $this->kelas ?? null,
         ];
     }
 }

@@ -18,6 +18,7 @@ class Mahasiswa extends Model
         'diploma',
         'tahun_masuk',
         'nomor_prodi',
+        'kelas',
     ];
 
 

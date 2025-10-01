@@ -19,11 +19,13 @@ class UpdateMahasiswaRequest extends FormRequest
             return [
                 'nim' => ['required', 'string'],
                 'nama' => ['required', 'string'],
+                'kelas' => ['required', 'string'],
             ];
         } else { // PATCH
             return [
                 'nim' => ['sometimes', 'string'],
                 'nama' => ['sometimes', 'string'],
+                'kelas' => ['sometimes', 'string'],
             ];
         }
     }

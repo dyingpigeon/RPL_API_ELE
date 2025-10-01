@@ -47,6 +47,7 @@ class MahasiswaFactory extends Factory
             'tahun_masuk' => $tahunMasuk,
             'nomor_prodi' => (int) $nomorProdi,
             'nim' => $nim,
+            'kelas' => fake()->randomElement(['A','B','C','D','E']),
         ];
     }
 }
