@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+// adding small changes
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
