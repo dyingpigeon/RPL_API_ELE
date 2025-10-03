@@ -21,7 +21,8 @@ class PasswordResetController extends Controller
         }
 
         // Buat token random
-        $token = Str::random(60);
+        $token = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
 
         // Simpan ke tabel password_resets
         DB::table('password_reset_tokens')->updateOrInsert(
