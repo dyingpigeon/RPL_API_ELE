@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\PostinganController;
 use App\Http\Controllers\Api\V1\SubmisiController;
 use App\Http\Controllers\Api\V1\TugasController;
+use App\Http\Controllers\Api\V1\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AdminController;
@@ -24,15 +25,18 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('jadwal', JadwalController::class);
     Route::apiResource('krs', KrsController::class);
     Route::apiResource('mahasiswa', MahasiswaController::class);
-    Route::apiResource('matakuliah', MataKuliahController::class);
+    Route::apiResource('mata-kuliah', MataKuliahController::class);
     Route::apiResource('postingan', PostinganController::class);
     Route::apiResource('tugas', TugasController::class);
     Route::apiResource('submisi', SubmisiController::class);
     Route::post('/registrasi', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
 
-    Route::post('/forgotPassword', [PasswordResetController::class, 'forgot']);
-    Route::post('/resetPassword', [PasswordResetController::class, 'reset']);
+    Route::post('/forgot-password', [PasswordResetController::class, 'forgot']);
+    Route::post('/reset-password', [PasswordResetController::class, 'reset']);
+
+    Route::post('/send-verification', [VerificationController::class, 'sendVerificationCode']);
+    Route::post('/verify-code', [VerificationController::class, 'verifyCode']);
     // Route::get('/resetPassword/{token}', function (Request $request, $token) {
     //     // Redirect ke frontend dengan token (misalnya ke http://localhost:3000/reset?token=xxx&email=...)
     //     return redirect("http://localhost:3000/reset-password?token=$token&email={$request->email}");

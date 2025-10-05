@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('id_dosen')->constrained('dosens')->onDelete('cascade');
             $table->foreignId('id_matkul')->constrained('mata_kuliahs')->onDelete('cascade');
             $table->integer('semester');
+            $table->enum('prodi', ['TRSE', 'TI', 'TL']); // ← UBAH KE ENUM
             $table->string('kelas');
             $table->timestamps(); 
         });

@@ -29,6 +29,7 @@ class StoreJadwalRequest extends FormRequest
             'dosenId' => 'required|integer|exists:dosens,id',
             'matkulId' => 'required|integer|exists:mata_kuliahs,id',
             'semester' => 'required|integer|min:1',
+            'prodi' => 'required|string',
             'kelas' => 'required|string',
         ];
     }

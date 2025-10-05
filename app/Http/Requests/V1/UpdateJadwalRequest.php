@@ -32,6 +32,7 @@ class UpdateJadwalRequest extends FormRequest
                 'dosenId' => ['required', 'integer'],
                 'matkulId' => ['required', 'integer'],
                 'semester' => ['required', 'integer'],
+                'prodi' => ['required', 'string'],
                 'kelas' => ['required', 'string'],
             ];
         } else {
@@ -43,6 +44,7 @@ class UpdateJadwalRequest extends FormRequest
                 'dosenId' => ['sometimes', 'integer'],
                 'matkulId' => ['sometimes', 'integer'],
                 'semester' => ['sometimes', 'integer'],
+                'prodi' => ['sometimes', 'string'],
                 'kelas' => ['sometimes', 'string'],
             ];
         }

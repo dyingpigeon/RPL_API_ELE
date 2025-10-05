@@ -23,6 +23,7 @@ class JadwalResource extends JsonResource
             'dosenId' => $this->id_dosen,
             'matkulId' => $this->id_matkul,
             'semester' => $this->semester,
+            'prodi' => $this->prodi,
             'kelas' => $this->kelas,
         ];
     }

@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\DosenResource;
 use App\Http\Resources\V1\MahasiswaResource;
-use App\Http\Resources\V1\UserResource;
 use App\Models\User;
+use App\Models\Mahasiswa;
+use App\Models\Dosen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -14,7 +15,7 @@ use Illuminate\Support\Str;
 class AuthController extends Controller
 {
     /**
-     * Register user baru
+     * Register user baru TANPA verifikasi email dan TANPA token
      */
     public function register(Request $request)
     {
@@ -25,11 +26,11 @@ class AuthController extends Controller
             'role' => 'required|in:admin,mahasiswa,dosen',
         ]);
 
-        // Buat user baru
+        // Buat user baru dengan email_verified_at = null
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'email_verified_at' => now(),
+            'email_verified_at' => null, // ← Belum terverifikasi
             'password' => Hash::make($validated['password']),
             'role' => $validated['role'],
             'remember_token' => Str::random(10),
@@ -38,28 +39,46 @@ class AuthController extends Controller
         // Buat data tambahan berdasarkan role
         switch ($user->role) {
             case 'mahasiswa':
-                \App\Models\Mahasiswa::create([
+                Mahasiswa::create([
                     'user_id' => $user->id,
                     'nama' => $user->name,
                 ]);
                 break;
 
             case 'dosen':
-                \App\Models\Dosen::create([
+                Dosen::create([
                     'user_id' => $user->id,
                     'nama' => $user->name,
                 ]);
                 break;
         }
 
+        // Ambil data tambahan berdasarkan role (jika perlu di response)
+        // $extraData = null;
+        // if ($user->role === 'mahasiswa' && $user->mahasiswa) {
+        //     $extraData = new MahasiswaResource($user->mahasiswa);
+        // } elseif ($user->role === 'dosen' && $user->dosen) {
+        //     $extraData = new DosenResource($user->dosen);
+        // }
+
         return response()->json([
-            'message' => 'User registered successfully',
-            'user' => new UserResource($user),
+            'success' => true,
+            'message' => 'Registrasi berhasil. Silakan login dan verifikasi email Anda.',
+            // 'data' => [
+            //     'user' => [
+            //         'id' => $user->id,
+            //         'name' => $user->name,
+            //         'email' => $user->email,
+            //         'role' => $user->role,
+            //         'email_verified' => false,
+            //     ],
+            //     $user->role => $extraData,
+            // ]
         ], 201);
     }
 
     /**
-     * Login user
+     * Login user 
      */
     public function login(Request $request)
     {
@@ -74,20 +93,12 @@ class AuthController extends Controller
 
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
             return response()->json([
-                'message' => 'Invalid credentials'
+                'success' => false,
+                'message' => 'Email atau password salah'
             ], 401);
         }
 
-        // // Untuk API biasanya bikin token (contoh pakai sanctum)
-        // $token = $user->createToken('auth_token')->plainTextToken;
-
-        // return response()->json([
-        //     'message' => 'Login success',
-        //     'user' => new UserResource($user),
-        //     'token' => $token,
-        // ]);
-
-        // ambil relasi data tambahan
+        // Ambil relasi data tambahan
         $extraData = null;
         if ($user->role === 'mahasiswa' && $user->mahasiswa) {
             $extraData = new MahasiswaResource($user->mahasiswa);
@@ -95,16 +106,26 @@ class AuthController extends Controller
             $extraData = new DosenResource($user->dosen);
         }
 
-        return response()->json([
-            'message' => 'Login success',
-            'user' => [
-                'name' => $user->name,
-                'email' => $user->email,
-                'role' => $user->role,
-            ],
-            $user->role => $extraData, // kunci JSON otomatis "mahasiswa" / "dosen"
-            'token' => $user->createToken('auth_token')->plainTextToken,
-        ]);
+        // Tentukan status verifikasi
+        $isVerified = !is_null($user->email_verified_at);
 
+        // GENERATE TOKEN 
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'message' => $isVerified ? 'Login berhasil' : 'Login berhasil. Silakan verifikasi email Anda.',
+            'data' => [
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                    'email_verified' => $isVerified,
+                ],
+                $user->role => $extraData,
+                'token' => $token, 
+            ]
+        ]);
     }
 }

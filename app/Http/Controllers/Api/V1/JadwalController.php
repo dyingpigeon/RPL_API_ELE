@@ -51,6 +51,10 @@ class JadwalController extends Controller
             $query->where('kelas', $request->kelas . '%');
         }
 
+        if ($request->has('prodi')) {
+            $query->where('prodi', $request->prodi . '%');
+        }
+
 
         // filter berdasarkan nim
         if ($request->has('nim')) {

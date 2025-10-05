@@ -19,6 +19,7 @@ class Jadwal extends Model
         'id_matkul',
         'semester',
         'kelas',
+        'prodi',
     ];
 
     public function dosen()

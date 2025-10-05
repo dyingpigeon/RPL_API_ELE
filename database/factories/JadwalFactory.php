@@ -24,6 +24,7 @@ class JadwalFactory extends Factory
             'id_dosen' => $dosen->id,
             'id_matkul' => $matkul->id,
             'semester' => fake()->numberBetween(1, 8),
+            'prodi' => fake()->randomElement(['TRSE', 'TI', 'TL']), // ← TAMBAHKAN INI
             'kelas' => fake()->randomElement(['A','B','C','D','E']),
         ];
     }
