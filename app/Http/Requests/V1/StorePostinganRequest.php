@@ -21,6 +21,7 @@ class StorePostinganRequest extends FormRequest
     {
         return [
             'dosenId' => ['required', 'integer', 'exists:dosens,id'],
+            'jadwalId' => ['required', 'integer', 'exists:jadwals,id'],
             'caption' => ['required', 'string'],
             'imageUrl' => ['nullable', 'string'],
         ];
