@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('postingans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('dosen_id')->constrained('dosens')->onDelete('cascade');
+            $table->foreignId('jadwal_id')->constrained('jadwals')->onDelete('cascade');
             $table->text('caption')->nullable();
             $table->string('image_url')->nullable();
             $table->timestamps();

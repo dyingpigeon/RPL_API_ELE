@@ -26,12 +26,14 @@ class UpdatePostinganRequest extends FormRequest
         if ($method == 'PUT') {
             return [
                 'dosen_id' => ['required', 'integer', 'exists:dosens,id'],
+                'jadwal_id' => ['required', 'integer', 'exists:jadwals,id'],
                 'caption' => ['nullable', 'string'],
                 'image_url' => ['nullable', 'string'],
             ];
         } else { // PATCH
             return [
                 'dosen_id' => ['sometimes', 'integer', 'exists:dosens,id'],
+                'jadwal_id' => ['sometimes', 'integer', 'exists:jadwals,id'],
                 'caption' => ['sometimes', 'string'],
                 'image_url' => ['sometimes', 'string'],
             ];

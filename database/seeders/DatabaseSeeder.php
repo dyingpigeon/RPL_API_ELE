@@ -20,13 +20,13 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-            \App\Models\User::factory(18)->create();
-            \App\Models\Admin::factory(3)->create();
-            \App\Models\Mahasiswa::factory(10)->create();
-            \App\Models\Dosen::factory(5)->create();
-            \App\Models\MataKuliah::factory(10)->create();
+            User::factory(50)->create();
+            \App\Models\Admin::factory(2)->create();
+            \App\Models\Mahasiswa::factory(30)->create();
+            \App\Models\Dosen::factory(28)->create();
+            \App\Models\MataKuliah::factory(20)->create();
             \App\Models\Jadwal::factory(20)->create();
-            \App\Models\Postingan::factory(20)->create();
+            \App\Models\Postingan::factory(150)->create();
             \App\Models\Tugas::factory(20)->create();
             \App\Models\Submisi::factory(20)->create();
     }

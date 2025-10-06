@@ -17,6 +17,7 @@ class PostinganResource extends JsonResource
         return [
             'id' => $this->id,
             'dosenId' => $this->dosen_id,  // foreign key ke dosen
+            'jadwalId' => $this->jadwal_id,  // foreign key ke dosen
             'caption' => $this->caption ?? null,
             'imageUrl' => $this->image_url ?? null,
         ];

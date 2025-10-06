@@ -12,6 +12,7 @@ class Postingan extends Model
 
     protected $fillable = [
         'dosen_id',
+        'jadwal_id',
         'caption',
         'image_url',
     ];
@@ -19,5 +20,9 @@ class Postingan extends Model
     public function dosen()
     {
         return $this->belongsTo(Dosen::class, 'nip', 'nip');
+    }
+    public function jadwal()
+    {
+            return $this->belongsTo(Jadwal::class, 'id', 'id');
     }
 }
