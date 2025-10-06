@@ -34,6 +34,7 @@ class StorePostinganRequest extends FormRequest
     {
         $this->merge([
             'dosen_id' => $this->dosenId,
+            'jadwal_id' => $this->jadwalId,
             'image_url' => $this->imageUrl,
         ]);
     }
