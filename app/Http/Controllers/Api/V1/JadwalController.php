@@ -18,7 +18,7 @@ class JadwalController extends Controller
     {
         $query = Jadwal::query();
 
-        // filter berdasarkan nama
+        // Filter untuk pencarian (gunakan LIKE)
         if ($request->has('hari')) {
             $query->where('hari', 'like', '%' . $request->hari . '%');
         }
@@ -35,34 +35,35 @@ class JadwalController extends Controller
             $query->where('ruangan', 'like', '%' . $request->ruangan . '%');
         }
 
+        // Filter untuk exact match (gunakan = bukan LIKE)
         if ($request->has('dosen')) {
-            $query->where('id_dosen', $request->dosen . '%');
+            $query->where('id_dosen', $request->dosen);  // Exact match
         }
 
         if ($request->has('matkul')) {
-            $query->where('id_matkul', $request->matkul . '%');
+            $query->where('id_matkul', $request->matkul);  // Exact match
         }
 
         if ($request->has('semester')) {
-            $query->where('semester', $request->semester . '%');
+            $query->where('semester', $request->semester);  // Exact match
         }
 
         if ($request->has('kelas')) {
-            $query->where('kelas', $request->kelas . '%');
+            $query->where('kelas', $request->kelas);  // Exact match
         }
 
         if ($request->has('prodi')) {
-            $query->where('prodi', $request->prodi . '%');
+            $query->where('prodi', $request->prodi);  // Exact match
         }
-
 
         // filter berdasarkan nim
         if ($request->has('nim')) {
             $query->where('nim', $request->nim);
         }
 
-        return JadwalResource::collection($query->paginate(10));// return semua hasil
+        return JadwalResource::collection($query->paginate(10));
     }
+
 
     /**
      * Show the form for creating a new resource.
