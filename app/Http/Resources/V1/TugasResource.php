@@ -16,9 +16,11 @@ class TugasResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'jadwalId' => $this->jadwal_id,
             'dosenId' => $this->dosen_id,
             'judul' => $this->judul,
             'deskripsi' => $this->deskripsi ?? null,
+            'fileUrl' => $this->file_url ?? null,
             'deadline' => $this->deadline ?? null,
         ];
     }

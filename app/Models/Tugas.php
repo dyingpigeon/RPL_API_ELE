@@ -14,7 +14,7 @@ class Tugas extends Model
         'jadwal_id',
         'judul',
         'deskripsi',
-        'file_url',
+        'file_url', 
         'deadline',
     ];
 
