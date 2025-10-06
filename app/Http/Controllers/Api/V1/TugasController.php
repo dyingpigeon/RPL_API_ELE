@@ -18,33 +18,47 @@ class TugasController extends Controller
     {
         $query = Tugas::query();
 
-        // filter berdasarkan dosen
-        if ($request->has('dosen_id')) {
-            $query->where('dosen_id', $request->dosen_id);
+        // Join dengan jadwal untuk filter
+        if ($request->has('kelas') || $request->has('prodi') || $request->has('semester')) {
+            $query->join('jadwals', 'tugas.jadwal_id', '=', 'jadwals.id');
         }
 
-        // filter berdasarkan jadwal
-        if ($request->has('jadwal_id')) {
-            $query->where('jadwal_id', $request->jadwal_id);
+        // Filter berdasarkan jadwal (EXACT MATCH)
+        if ($request->has('kelas')) {
+            $query->where('jadwals.kelas', $request->kelas);
         }
 
-        // filter berdasarkan judul (cari sebagian kata)
+        if ($request->has('prodi')) {
+            $query->where('jadwals.prodi', $request->prodi);
+        }
+
+        if ($request->has('semester')) {
+            $query->where('jadwals.semester', $request->semester);
+        }
+
+        // Filter lainnya (LIKE untuk pencarian)
         if ($request->has('judul')) {
-            $query->where('judul', 'like', '%' . $request->judul . '%');
+            $query->where('tugas.judul', 'like', '%' . $request->judul . '%');
         }
 
-        // filter berdasarkan deadline sebelum/sesudah
-        if ($request->has('deadline_before')) {
-            $query->where('deadline', '<=', $request->deadline_before);
+        if ($request->has('dosen')) {
+            $query->where('tugas.dosen_id', $request->dosen); // Exact match
         }
 
-        if ($request->has('deadline_after')) {
-            $query->where('deadline', '>=', $request->deadline_after);
+        // Filter by jadwalId jika ada
+        if ($request->has('jadwalId')) {
+            $query->where('tugas.jadwal_id', $request->jadwalId);
         }
+
+        // Select specific columns to avoid ambiguity
+        $query->select('tugas.*');
+
+        // Debug query (optional)
+        \Log::info('Tugas Query: ' . $query->toSql());
+        \Log::info('Tugas Parameters: ' . json_encode($query->getBindings()));
 
         return TugasResource::collection($query->paginate(10));
     }
-
     /**
      * Store a newly created resource in storage.
      */
