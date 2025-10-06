@@ -18,15 +18,22 @@ class PostinganController extends Controller
     {
         $query = Postingan::query();
 
-        // filter berdasarkan dosen_id
-        if ($request->has('dosen_id')) {
-            $query->where('dosen_id', $request->dosen_id);
+        // Filter untuk exact match
+        if ($request->has('dosenId')) {
+            $query->where('dosen_id', $request->dosenId);
         }
 
-        // filter berdasarkan caption (misalnya cari kata dalam caption)
+        if ($request->has('jadwalId')) {
+            $query->where('jadwal_id', $request->jadwalId);
+        }
+
+        // Filter untuk pencarian (gunakan LIKE)
         if ($request->has('caption')) {
             $query->where('caption', 'like', '%' . $request->caption . '%');
         }
+
+        // Default sorting by latest
+        $query->orderBy('created_at', 'desc');
 
         return PostinganResource::collection($query->paginate(10));
     }
