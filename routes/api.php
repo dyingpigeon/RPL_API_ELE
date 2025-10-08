@@ -30,6 +30,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
     Route::apiResource('postingan', PostinganController::class);
     Route::apiResource('tugas', TugasController::class);
     Route::apiResource('submisi', SubmisiController::class);
+    Route::apiResource('user', UserController::class);
     Route::post('/registrasi', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
 
@@ -38,8 +39,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
 
     Route::post('/send-verification', [VerificationController::class, 'sendVerificationCode']);
     Route::post('/verify-code', [VerificationController::class, 'verifyCode']);
-    Route::put('/user/{id}', [UserController::class, 'user']);
-    Route::patch('/user/{id}', [UserController::class, 'user']);
+    // Route::patch('/user/{id}', [UserController::class, 'user']);
     // Route::get('/resetPassword/{token}', function (Request $request, $token) {
     //     // Redirect ke frontend dengan token (misalnya ke http://localhost:3000/reset?token=xxx&email=...)
     //     return redirect("http://localhost:3000/reset-password?token=$token&email={$request->email}");

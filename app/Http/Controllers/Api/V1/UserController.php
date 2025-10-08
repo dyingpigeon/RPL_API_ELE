@@ -10,21 +10,14 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    // public function update(UpdateUserRequest $request, $id)
-    // {
-    //     $user = User::findOrFail($id);
-
-    //     $user->update($request->only('name'));
-
-    //     return response()->json([
-    //         'message' => 'User name updated successfully!',
-    //         'data' => $user,
-    //     ]);
-    // }
-
-        public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->all());
         return new UserResource($user);
+    }
+
+    public function show(User $mahasiswa)
+    {
+        return new UserResource($mahasiswa);
     }
 }
