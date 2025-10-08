@@ -64,8 +64,11 @@ class TugasController extends Controller
      */
     public function store(StoreTugasRequest $request)
     {
-        $tugas = Tugas::create($request->validated());
-        return new TugasResource($tugas);
+        return new TugasResource(Tugas::create($request->all()));
+        // Tugas::create($request->validated());
+        // return new PostinganResource(Postingan::create($request->all()));
+
+        // return new TugasResource($tugas);
     }
 
     /**

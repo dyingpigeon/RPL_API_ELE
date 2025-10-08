@@ -14,12 +14,12 @@ class StoreTugasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dosenId'   => ['required', 'integer', 'exists:dosens,id'],
-            'jadwalId'  => ['required', 'integer', 'exists:jadwals,id'],
-            'judul'     => ['required', 'string', 'max:255'],
+            'dosenId' => ['required', 'integer', 'exists:dosens,id'],
+            'jadwalId' => ['required', 'integer', 'exists:jadwals,id'],
+            'judul' => ['required', 'string', 'max:255'],
             'deskripsi' => ['required', 'string'],
-            'fileUrl'   => ['nullable', 'string', 'max:255'],
-            'deadline'  => ['nullable', 'date'],
+            'fileUrl' => ['nullable', 'string', 'max:255'],
+            'deadline' => ['nullable', 'date'],
         ];
     }
 
