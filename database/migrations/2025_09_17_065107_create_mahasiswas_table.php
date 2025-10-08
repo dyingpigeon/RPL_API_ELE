@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('nim')->nullable()->unique(); 
-            $table->string('nama');
+            // $table->string('nama');
             $table->string('prodi')->nullable();
             $table->string('diploma')->nullable();       // d1, d2, d3
             $table->year('tahun_masuk')->nullable();     // tahun masuk

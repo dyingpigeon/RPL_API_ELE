@@ -19,9 +19,9 @@ class MahasiswaController extends Controller
         $query = Mahasiswa::query();
 
         // filter berdasarkan nama
-        if ($request->has('nama')) {
-            $query->where('nama', 'like', '%' . $request->nama . '%');
-        }
+        // if ($request->has('nama')) {
+        //     $query->where('nama', 'like', '%' . $request->nama . '%');
+        // }
 
         if ($request->has('prodi')) {
             $query->where('prodi', 'like', '%' . $request->prodi . '%');

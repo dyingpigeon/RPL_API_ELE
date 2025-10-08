@@ -41,7 +41,7 @@ class MahasiswaFactory extends Factory
 
         return [
             'user_id' => $user->id,
-            'nama' => $user->name,
+            // 'nama' => $user->name,
             'prodi' => $prodi,
             'diploma' => 'D' . $diploma,
             'tahun_masuk' => $tahunMasuk,

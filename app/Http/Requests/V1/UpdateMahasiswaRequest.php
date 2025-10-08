@@ -18,13 +18,13 @@ class UpdateMahasiswaRequest extends FormRequest
         if ($method == 'PUT') {
             return [
                 'nim' => ['required', 'string'],
-                'nama' => ['required', 'string'],
+                // 'nama' => ['required', 'string'],
                 'kelas' => ['required', 'string'],
             ];
         } else { // PATCH
             return [
                 'nim' => ['sometimes', 'string'],
-                'nama' => ['sometimes', 'string'],
+                // 'nama' => ['sometimes', 'string'],
                 'kelas' => ['sometimes', 'string'],
             ];
         }
