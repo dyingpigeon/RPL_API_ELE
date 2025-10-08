@@ -11,7 +11,7 @@ class UpdateTugasRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // harus true biar request diizinkan
+        return true; // harus true agar request diizinkan
     }
 
     /**
@@ -23,24 +23,42 @@ class UpdateTugasRequest extends FormRequest
     {
         $method = $this->method();
 
-        if ($method === 'PUT') {
+        if ($method == 'PUT') {
             return [
-                'dosen_id'   => ['required', 'integer', 'exists:dosens,id'],
-                'jadwal_id'  => ['required', 'integer', 'exists:jadwals,id'],
-                'judul'      => ['required', 'string', 'max:255'],
-                'deskripsi'  => ['required', 'string'],
-                'file_url'   => ['nullable', 'string', 'max:255'],
-                'deadline'   => ['nullable', 'date'],
+                'dosenId'   => ['required', 'integer'],
+                'jadwalId'  => ['required', 'integer'],
+                'judul'     => ['required', 'string', 'max:255'],
+                'deskripsi' => ['required', 'string'],
+                'fileUrl'   => ['nullable', 'string', 'max:255'],
+                'deadline'  => ['nullable', 'date'],
             ];
-        } else { // PATCH
+        } else {
             return [
-                'dosen_id'   => ['sometimes', 'integer', 'exists:dosens,id'],
-                'jadwal_id'  => ['sometimes', 'integer', 'exists:jadwals,id'],
-                'judul'      => ['sometimes', 'string', 'max:255'],
-                'deskripsi'  => ['sometimes', 'string'],
-                'file_url'   => ['sometimes', 'string', 'max:255'],
-                'deadline'   => ['sometimes', 'date'],
+                'dosenId'   => ['sometimes', 'integer'],
+                'jadwalId'  => ['sometimes', 'integer'],
+                'judul'     => ['sometimes', 'string', 'max:255'],
+                'deskripsi' => ['sometimes', 'string'],
+                'fileUrl'   => ['sometimes', 'string', 'max:255'],
+                'deadline'  => ['sometimes', 'date'],
             ];
+        }
+    }
+
+    /**
+     * Map input field dari camelCase ke snake_case agar sesuai dengan kolom database.
+     */
+    protected function prepareForValidation()
+    {
+        if ($this->has('dosenId')) {
+            $this->merge(['dosen_id' => $this->dosenId]);
+        }
+
+        if ($this->has('jadwalId')) {
+            $this->merge(['jadwal_id' => $this->jadwalId]);
+        }
+
+        if ($this->has('fileUrl')) {
+            $this->merge(['file_url' => $this->fileUrl]);
         }
     }
 }

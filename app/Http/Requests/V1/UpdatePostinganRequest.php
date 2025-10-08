@@ -11,7 +11,7 @@ class UpdatePostinganRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // jangan lupa true biar request diizinkan
+        return true; // pastikan true supaya request diizinkan
     }
 
     /**
@@ -23,7 +23,7 @@ class UpdatePostinganRequest extends FormRequest
     {
         $method = $this->method();
 
-        if ($method == 'PUT') {
+        if ($method === 'PUT') {
             return [
                 'dosen_id' => ['required', 'integer', 'exists:dosens,id'],
                 'jadwal_id' => ['required', 'integer', 'exists:jadwals,id'],
@@ -37,6 +37,22 @@ class UpdatePostinganRequest extends FormRequest
                 'caption' => ['sometimes', 'string'],
                 'image_url' => ['sometimes', 'string'],
             ];
+        }
+    }
+
+    /**
+     * Ubah camelCase dari frontend menjadi snake_case untuk database.
+     */
+    protected function prepareForValidation(): void
+    {
+        if ($this->has('dosenId')) {
+            $this->merge(['dosen_id' => $this->dosenId]);
+        }
+        if ($this->has('jadwalId')) {
+            $this->merge(['jadwal_id' => $this->jadwalId]);
+        }
+        if ($this->has('imageUrl')) {
+            $this->merge(['image_url' => $this->imageUrl]);
         }
     }
 }

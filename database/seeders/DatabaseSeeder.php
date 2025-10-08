@@ -21,6 +21,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'the.farhanad123@gmail.com',
             'password' => 'jdmjdmjdm', // tambahkan password
         ]);
+        User::factory()->create([
+            'name' => 'harik',
+            'email' => 'levyh.k98@gmail.com',
+            'password' => 'mieayam9', // tambahkan password
+        ]);
 
         // Tambah user manual lain (tanpa factory)
         // User::create([

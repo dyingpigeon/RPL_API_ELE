@@ -11,7 +11,7 @@ class UpdateSubmisiRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; // harus true biar request diizinkan
+        return true; // pastikan true agar request diizinkan
     }
 
     /**
@@ -42,5 +42,17 @@ class UpdateSubmisiRequest extends FormRequest
                 'nilai'        => ['sometimes', 'integer', 'between:0,100'],
             ];
         }
+    }
+
+    /**
+     * Ubah camelCase dari frontend menjadi snake_case agar sesuai kolom DB.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'mahasiswa_id' => $this->mahasiswaId ?? $this->mahasiswa_id,
+            'tugas_id'     => $this->tugasId ?? $this->tugas_id,
+            'file_url'     => $this->fileUrl ?? $this->file_url,
+        ]);
     }
 }
