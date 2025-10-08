@@ -16,18 +16,18 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'farhan',
-            'email' => 'the.farhanad123@gmail.com',
-            'role' => 'mahasiswa',
-            'password' => 'jdmjdmjdm', // tambahkan password
-        ]);
-        User::factory()->create([
-            'name' => 'harik',
-            'role' => 'mahasiswa',
-            'email' => 'levyh.k98@gmail.com',
-            'password' => 'mieayam9', // tambahkan password
-        ]);
+        // User::factory()->create([
+        //     'name' => 'farhan',
+        //     'email' => 'the.farhanad123@gmail.com',
+        //     'role' => 'mahasiswa',
+        //     'password' => 'jdmjdmjdm', // tambahkan password
+        // ]);
+        // User::factory()->create([
+        //     'name' => 'harik',
+        //     'role' => 'mahasiswa',
+        //     'email' => 'levyh.k98@gmail.com',
+        //     'password' => 'mieayam9', // tambahkan password
+        // ]);
 
         // Tambah user manual lain (tanpa factory)
         // User::create([
