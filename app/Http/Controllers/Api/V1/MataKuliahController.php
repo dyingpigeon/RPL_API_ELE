@@ -37,9 +37,9 @@ class MataKuliahController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(MataKuliah $matakuliah)
+    public function show(MataKuliah $mata_kuliah)
     {
-        return new MataKuliahResource($matakuliah);
+        return new MataKuliahResource($mata_kuliah);
     }
 
     /**
