@@ -1,47 +1,54 @@
 <?php
 
-use App\Http\Controllers\Api\V1\DosenController;
-use App\Http\Controllers\Api\V1\JadwalController;
-use App\Http\Controllers\Api\V1\KrsController;
-use App\Http\Controllers\Api\V1\MahasiswaController;
-use App\Http\Controllers\Api\V1\MataKuliahController;
-use App\Http\Controllers\Api\V1\AuthController;
-use App\Http\Controllers\Api\V1\PostinganController;
-use App\Http\Controllers\Api\V1\SubmisiController;
-use App\Http\Controllers\Api\V1\TugasController;
-use App\Http\Controllers\Api\V1\UserController;
-use App\Http\Controllers\Api\V1\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\AdminController;
-use App\Http\Controllers\Api\V1\PasswordResetController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// V1 Routes
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function () {
-    Route::apiResource('admin', AdminController::class);
-    Route::apiResource('dosen', DosenController::class);
-    Route::apiResource('jadwal', JadwalController::class);
-    Route::apiResource('krs', KrsController::class);
-    Route::apiResource('mahasiswa', MahasiswaController::class);
-    Route::apiResource('mata-kuliah', MataKuliahController::class);
-    Route::apiResource('postingan', PostinganController::class);
-    Route::apiResource('tugas', TugasController::class);
-    Route::apiResource('submisi', SubmisiController::class);
-    Route::apiResource('user', UserController::class);
-    Route::post('/registrasi', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::apiResource('admin', 'AdminController');
+    Route::apiResource('dosen', 'DosenController');
+    Route::apiResource('jadwal', 'JadwalController');
+    Route::apiResource('krs', 'KrsController');
+    Route::apiResource('mahasiswa', 'MahasiswaController');
+    Route::apiResource('mata-kuliah', 'MataKuliahController');
+    Route::apiResource('postingan', 'PostinganController');
+    Route::apiResource('tugas', 'TugasController');
+    Route::apiResource('submisi', 'SubmisiController');
+    Route::apiResource('user', 'UserController');
+    
+    Route::post('/registrasi', 'AuthController@register');
+    Route::post('/login', 'AuthController@login');
+    
+    Route::post('/forgot-password', 'PasswordResetController@forgot');
+    Route::post('/reset-password', 'PasswordResetController@reset');
+    
+    Route::post('/send-verification', 'VerificationController@sendVerificationCode');
+    Route::post('/verify-code', 'VerificationController@verifyCode');
+});
 
-    Route::post('/forgot-password', [PasswordResetController::class, 'forgot']);
-    Route::post('/reset-password', [PasswordResetController::class, 'reset']);
-
-    Route::post('/send-verification', [VerificationController::class, 'sendVerificationCode']);
-    Route::post('/verify-code', [VerificationController::class, 'verifyCode']);
-    // Route::patch('/user/{id}', [UserController::class, 'user']);
-    // Route::get('/resetPassword/{token}', function (Request $request, $token) {
-    //     // Redirect ke frontend dengan token (misalnya ke http://localhost:3000/reset?token=xxx&email=...)
-    //     return redirect("http://localhost:3000/reset-password?token=$token&email={$request->email}");
-    // })->name('password.reset');
+// V2 Routes
+Route::group(['prefix' => 'v2', 'namespace' => 'App\Http\Controllers\Api\V2'], function () {
+    Route::apiResource('admin', 'AdminController');
+    Route::apiResource('dosen', 'DosenController');
+    Route::apiResource('jadwal', 'JadwalController');
+    Route::apiResource('krs', 'KrsController');
+    Route::apiResource('mahasiswa', 'MahasiswaController');
+    Route::apiResource('mata-kuliah', 'MataKuliahController');
+    Route::apiResource('postingan', 'PostinganController');
+    Route::apiResource('tugas', 'TugasController');
+    Route::apiResource('submisi', 'SubmisiController');
+    Route::apiResource('user', 'UserController');
+    
+    Route::post('/registrasi', 'AuthController@register');
+    Route::post('/login', 'AuthController@login');
+    
+    Route::post('/forgot-password', 'PasswordResetController@forgot');
+    Route::post('/reset-password', 'PasswordResetController@reset');
+    
+    Route::post('/send-verification', 'VerificationController@sendVerificationCode');
+    Route::post('/verify-code', 'VerificationController@verifyCode');
 });

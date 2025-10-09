@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V2;
 
 use App\Models\Dosen;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\StoreDosenRequest;
-use App\Http\Resources\V1\DosenResource;
-use App\Http\Requests\V1\UpdateDosenRequest;
+use App\Http\Requests\V2\StoreDosenRequest;
+use App\Http\Resources\V2\DosenResource;
+use App\Http\Requests\V2\UpdateDosenRequest;
 
 
 class DosenController extends Controller

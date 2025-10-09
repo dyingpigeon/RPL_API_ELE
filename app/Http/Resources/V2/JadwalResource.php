@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Resources\V2;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class JadwalResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'hari'=> $this->hari,
+            'jamMulai' => $this->jam_mulai,
+            'jamSelesai' => $this->jam_selesai,
+            'ruangan' => $this->ruangan,
+            'dosenId' => $this->id_dosen,
+            'matkulId' => $this->id_matkul,
+            'semester' => $this->semester,
+            'prodi' => $this->prodi,
+            'kelas' => $this->kelas,
+        ];
+    }
+}
