@@ -19,7 +19,7 @@ class MataKuliahController extends Controller
         $query = MataKuliah::query();
 
         // filter berdasarkan nama
-        if ($request->has('matkul')) {
+        if ($request->has('mataKuliah')) {
             $query->where('mata_kuliah', 'like', '%' . $request->matkul . '%');
         }
 
