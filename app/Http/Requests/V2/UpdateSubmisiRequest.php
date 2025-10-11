@@ -6,53 +6,40 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSubmisiRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return true; // pastikan true agar request diizinkan
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
-        $method = $this->method();
-
-        if ($method === 'PUT') {
-            return [
-                'mahasiswa_id' => ['required', 'integer', 'exists:mahasiswas,id'],
-                'tugas_id'     => ['required', 'integer', 'exists:tugas,id'],
-                'file_url'     => ['required', 'string', 'max:255'],
-                'komentar'     => ['nullable', 'string'],
-                'selesai'      => ['required', 'boolean'],
-                'nilai'        => ['nullable', 'integer', 'between:0,100'],
-            ];
-        } else { // PATCH
+        if ($this->isMethod('put')) {
             return [
                 'mahasiswa_id' => ['sometimes', 'integer', 'exists:mahasiswas,id'],
                 'tugas_id'     => ['sometimes', 'integer', 'exists:tugas,id'],
-                'file_url'     => ['sometimes', 'string', 'max:255'],
-                'komentar'     => ['sometimes', 'string'],
+                'fileUrl'      => ['required', 'file', 'mimes:pdf,doc,docx,zip,rar,txt,jpg,jpeg,png', 'max:10240'],
+                'komentar'     => ['nullable', 'string'],
                 'selesai'      => ['sometimes', 'boolean'],
-                'nilai'        => ['sometimes', 'integer', 'between:0,100'],
+                'nilai'        => ['nullable', 'integer', 'between:0,100'],
             ];
         }
+
+        return [
+            'mahasiswa_id' => ['sometimes', 'integer', 'exists:mahasiswas,id'],
+            'tugas_id'     => ['sometimes', 'integer', 'exists:tugas,id'],
+            'fileUrl'      => ['sometimes', 'nullable', 'file', 'mimes:pdf,doc,docx,zip,rar,txt,jpg,jpeg,png', 'max:10240'],
+            'komentar'     => ['sometimes', 'nullable', 'string'],
+            'selesai'      => ['sometimes', 'boolean'],
+            'nilai'        => ['sometimes', 'nullable', 'integer', 'between:0,100'],
+        ];
     }
 
-    /**
-     * Ubah camelCase dari frontend menjadi snake_case agar sesuai kolom DB.
-     */
-    protected function prepareForValidation(): void
+    public function messages(): array
     {
-        $this->merge([
-            'mahasiswa_id' => $this->mahasiswaId ?? $this->mahasiswa_id,
-            'tugas_id'     => $this->tugasId ?? $this->tugas_id,
-            'file_url'     => $this->fileUrl ?? $this->file_url,
-        ]);
+        return [
+            'fileUrl.file' => 'File harus berupa file yang valid',
+            'fileUrl.mimes' => 'Format file harus: pdf, doc, docx, zip, rar, txt, jpg, jpeg, png',
+            'fileUrl.max' => 'Ukuran file maksimal 10MB',
+        ];
     }
 }

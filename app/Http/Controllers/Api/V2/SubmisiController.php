@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V2\StoreSubmisiRequest;
 use App\Http\Requests\V2\UpdateSubmisiRequest;
 use App\Http\Resources\V2\SubmisiResource;
+use Illuminate\Support\Facades\Storage;
+
 
 class SubmisiController extends Controller
 {
@@ -52,9 +54,26 @@ class SubmisiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSubmisiRequest $request)
+    // Di Controller untuk store method
+    public function store(UpdateSubmisiRequest $request) // atau buat Request khusus untuk store
     {
-        $submisi = Submisi::create($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('fileUrl')) {
+            $file = $request->file('fileUrl');
+            $extension = $file->getClientOriginalExtension();
+            $timestamp = time();
+
+            $fileName = 'T' . $data['tugas_id'] . '_M' . $data['mahasiswa_id'] . '_' . $timestamp . '.' . $extension;
+
+            $path = $file->storeAs('submissions', $fileName, 'public');
+            $data['file_url'] = $path;
+
+            unset($data['fileUrl']);
+        }
+
+        $submisi = Submisi::create($data);
+
         return new SubmisiResource($submisi);
     }
 
@@ -69,11 +88,88 @@ class SubmisiController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // public function update(UpdateSubmisiRequest $request, Submisi $submisi)
+    // {
+    //     $submisi->update($request->validated());
+    //     return new SubmisiResource($submisi);
+    // }
+
+    // public function update(UpdateSubmisiRequest $request, Submisi $submisi)
+    // {
+    //     $data = $request->validated();
+
+    //     if ($request->hasFile('submission')) {
+    //         // Hapus file lama jika ada
+    //         if ($submisi->file_url && Storage::disk('public')->exists($submisi->file_url)) {
+    //             Storage::disk('public')->delete($submisi->file_url);
+    //         }
+
+    //         $extension = $request->file('submission')->getClientOriginalExtension();
+    //         $timestamp = time();
+
+    //         // Format: T{tugas_id}_M{mahasiswa_id}_{timestamp}.{ext}
+    //         $fileName = 'T' . $submisi->tugas_id . '_M' . $submisi->mahasiswa_id . '_' . $timestamp . '.' . $extension;
+
+    //         $path = $request->file('submission')->storeAs('submissions', $fileName, 'public');
+    //         $data['file_url'] = $path;
+    //     }
+
+    //     $submisi->update($data);
+
+    //     return new SubmisiResource($submisi);
+    // }
+
+    // public function update(UpdateSubmisiRequest $request, Submisi $submisi)
+    // {
+    //     $data = $request->validated();
+
+    //     if ($request->hasFile('submission')) {
+    //         // Hapus file lama jika ada
+    //         if ($submisi->file_url && Storage::disk('public')->exists($submisi->file_url)) {
+    //             Storage::disk('public')->delete($submisi->file_url);
+    //         }
+
+    //         $file = $request->file('submission');
+    //         $extension = $file->getClientOriginalExtension();
+    //         $timestamp = time();
+
+    //         // Format: T{tugas_id}_M{mahasiswa_id}_{timestamp}.{ext}
+    //         $fileName = 'T' . $submisi->tugas_id . '_M' . $submisi->mahasiswa_id . '_' . $timestamp . '.' . $extension;
+
+    //         $path = $file->storeAs('submissions', $fileName, 'public');
+    //         $data['file_url'] = $path; // Simpan path ke kolom file_url
+    //     }
+
+    //     $submisi->update($data);
+
+    //     return new SubmisiResource($submisi);
+    // }
+
     public function update(UpdateSubmisiRequest $request, Submisi $submisi)
     {
-        $submisi->update($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('fileUrl')) {
+            // Hapus file lama jika ada
+            if ($submisi->file_url && Storage::disk('public')->exists($submisi->file_url)) {
+                Storage::disk('public')->delete($submisi->file_url);
+            }
+
+            $extension = $request->file('fileUrl')->getClientOriginalExtension();
+            $timestamp = time();
+
+            // Format: T{tugas_id}_M{mahasiswa_id}_{timestamp}.{ext}
+            $fileName = 'T' . $submisi->tugas_id . '_M' . $submisi->mahasiswa_id . '_' . $timestamp . '.' . $extension;
+
+            $path = $request->file('fileUrl')->storeAs('submissions', $fileName, 'public');
+            $data['file_url'] = $path;
+        }
+
+        $submisi->update($data);
+
         return new SubmisiResource($submisi);
     }
+
 
     /**
      * Remove the specified resource from storage.

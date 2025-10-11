@@ -1,4 +1,5 @@
 <?php
+// app/Models/User.php
 
 namespace App\Models;
 
@@ -23,6 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'photo', // Tambahkan photo
         'email_verified_at',
         'remember_token',
     ];
@@ -50,6 +52,15 @@ class User extends Authenticatable
         ];
     }
 
+    // Accessor untuk photo_url
+    public function getPhotoUrlAttribute()
+    {
+        if ($this->photo) {
+            return asset('storage/' . $this->photo);
+        }
+        return null;
+    }
+
     // relationships
     public function mahasiswa()
     {
@@ -66,4 +77,6 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class);
     }
 
+    // Tambahkan appends untuk include accessor di JSON
+    protected $appends = ['photo_url'];
 }

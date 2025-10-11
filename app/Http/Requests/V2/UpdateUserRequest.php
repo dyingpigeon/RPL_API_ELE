@@ -1,4 +1,5 @@
 <?php
+// app/Http\Requests\V2\UpdateUserRequest.php
 
 namespace App\Http\Requests\V2;
 
@@ -8,22 +9,31 @@ class UpdateUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // bisa ubah sesuai kebutuhan (misal hanya owner)
+        return true;
     }
 
     public function rules(): array
     {
-        $method = $this->method();
-
-        if ($method == 'PUT') {
-            // PUT = update seluruh data
+        if ($this->isMethod('put')) {
             return [
                 'name' => ['required', 'string', 'max:255'],
-            ];
-        } else { // PATCH = update sebagian
-            return [
-                'name' => ['sometimes', 'string', 'max:255'],
+                'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
             ];
         }
+
+        return [
+            'name' => ['sometimes', 'string', 'max:255'],
+            'photo' => ['sometimes', 'nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+        ];
+    }
+
+
+    public function messages(): array
+    {
+        return [
+            'photo.image' => 'File harus berupa gambar',
+            'photo.mimes' => 'Format gambar harus jpeg, png, jpg, atau gif',
+            'photo.max' => 'Ukuran gambar maksimal 2MB',
+        ];
     }
 }

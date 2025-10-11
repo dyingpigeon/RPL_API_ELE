@@ -1,4 +1,5 @@
 <?php
+// database/factories/UserFactory.php
 
 namespace Database\Factories;
 
@@ -19,6 +20,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'role' => fake()->randomElement(['admin', 'mahasiswa', 'dosen']),
+            'photo' => $this->faker->optional(0.3)->passthrough('users/' . Str::random(10) . '.jpg'), // 30% chance punya foto
             'remember_token' => Str::random(10),
         ];
     }
@@ -27,6 +29,14 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    // State untuk user dengan foto
+    public function withPhoto(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'photo' => 'users/' . Str::random(10) . '.jpg',
         ]);
     }
 }
