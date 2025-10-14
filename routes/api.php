@@ -10,55 +10,79 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // V1 Routes
-Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function () {
-    Route::apiResource('admin', 'AdminController');
-    Route::apiResource('dosen', 'DosenController');
-    Route::apiResource('jadwal', 'JadwalController');
-    Route::apiResource('krs', 'KrsController');
-    Route::apiResource('mahasiswa', 'MahasiswaController');
-    Route::apiResource('mata-kuliah', 'MataKuliahController');
-    Route::apiResource('postingan', 'PostinganController');
-    Route::apiResource('tugas', 'TugasController');
-    Route::apiResource('submisi', 'SubmisiController');
-    Route::apiResource('user', 'UserController');
+Route::group([
+    'prefix' => 'v1',
+    'namespace' => 'App\Http\Controllers\Api\V1'
+], function () {
 
+    // Public routes (tidak butuh auth)
     Route::post('/registrasi', 'AuthController@register');
     Route::post('/login', 'AuthController@login');
-
     Route::post('/forgot-password', 'PasswordResetController@forgot');
     Route::post('/reset-password', 'PasswordResetController@reset');
-
     Route::post('/send-verification', 'VerificationController@sendVerificationCode');
     Route::post('/verify-code', 'VerificationController@verifyCode');
+
+    // Protected routes (butuh auth dengan token)
+    Route::middleware(['auth:sanctum'])->group(function () {
+        // Auth management routes
+        Route::post('/logout', 'AuthController@logout');
+        Route::post('/refresh-token', 'AuthController@refresh');
+        Route::get('/check-token', 'AuthController@checkToken');
+
+        // Resource routes
+        Route::apiResource('admin', 'AdminController');
+        Route::apiResource('dosen', 'DosenController');
+        Route::apiResource('jadwal', 'JadwalController');
+        Route::apiResource('krs', 'KrsController');
+        Route::apiResource('mahasiswa', 'MahasiswaController');
+        Route::apiResource('mata-kuliah', 'MataKuliahController');
+        Route::apiResource('postingan', 'PostinganController');
+        Route::apiResource('tugas', 'TugasController');
+        Route::apiResource('submisi', 'SubmisiController');
+        Route::apiResource('user', 'UserController');
+    });
+
 });
 
 // V2 Routes - GUNAKAN SYNTAX MODERN
-Route::prefix('v2')->group(function () {
-    Route::apiResource('user', UserController::class);
-    Route::post('user/{user}', [UserController::class, 'update']);
-    // Route::delete('user/{user}/photo', [UserController::class, 'deletePhoto']);
+Route::group([
+    'prefix' => 'v2',
+    'namespace' => 'App\Http\Controllers\Api\V2'
+], function () {
 
-    // Route lainnya tetap pakai namespace string
-    Route::apiResource('admin', \App\Http\Controllers\Api\V2\AdminController::class);
-    Route::apiResource('dosen', \App\Http\Controllers\Api\V2\DosenController::class);
-    Route::apiResource('jadwal', \App\Http\Controllers\Api\V2\JadwalController::class);
-    Route::apiResource('krs', \App\Http\Controllers\Api\V2\KrsController::class);
-    Route::apiResource('mahasiswa', \App\Http\Controllers\Api\V2\MahasiswaController::class);
-    Route::apiResource('mata-kuliah', \App\Http\Controllers\Api\V2\MataKuliahController::class);
-    Route::apiResource('postingan', \App\Http\Controllers\Api\V2\PostinganController::class);
-    Route::apiResource('tugas', \App\Http\Controllers\Api\V2\TugasController::class);
-    Route::apiResource('submisi', SubmisiController::class);
-    // Route::post('submisi/{submisi}', [SubmisiController::class, 'update']);
+    // Public routes (tidak butuh auth)
+    Route::post('/registrasi', 'AuthController@register');
+    Route::post('/login', 'AuthController@login');
+    Route::post('/forgot-password', 'PasswordResetController@forgot');
+    Route::post('/reset-password', 'PasswordResetController@reset');
+    Route::post('/send-verification', 'VerificationController@sendVerificationCode');
+    Route::post('/verify-code', 'VerificationController@verifyCode');
 
-    Route::post('/registrasi', [\App\Http\Controllers\Api\V2\AuthController::class, 'register']);
-    Route::post('/login', [\App\Http\Controllers\Api\V2\AuthController::class, 'login']);
+    // Protected routes (butuh auth dengan token)
+    Route::middleware(['auth:sanctum'])->group(function () {
+        // Auth management routes
+        Route::post('/logout', 'AuthController@logout');
+        Route::post('/refresh-token', 'AuthController@refresh');
+        Route::get('/check-token', 'AuthController@checkToken');
 
-    Route::post('/forgot-password', [\App\Http\Controllers\Api\V2\PasswordResetController::class, 'forgot']);
-    Route::post('/reset-password', [\App\Http\Controllers\Api\V2\PasswordResetController::class, 'reset']);
+        // Resource routes dengan controller class (jika ada custom method)
+        Route::apiResource('user', UserController::class);
+        Route::post('user/{user}', [UserController::class, 'update']); // Custom update method
+        // Route::delete('user/{user}/photo', [UserController::class, 'deletePhoto']);
 
-    Route::post('/send-verification', [\App\Http\Controllers\Api\V2\VerificationController::class, 'sendVerificationCode']);
-    Route::post('/verify-code', [\App\Http\Controllers\Api\V2\VerificationController::class, 'verifyCode']);
+        Route::apiResource('submisi', SubmisiController::class);
+        // Route::post('submisi/{submisi}', [SubmisiController::class, 'update']); // Custom update method
+
+        // Resource routes dengan namespace string
+        Route::apiResource('admin', 'AdminController');
+        Route::apiResource('dosen', 'DosenController');
+        Route::apiResource('jadwal', 'JadwalController');
+        Route::apiResource('krs', 'KrsController');
+        Route::apiResource('mahasiswa', 'MahasiswaController');
+        Route::apiResource('mata-kuliah', 'MataKuliahController');
+        Route::apiResource('postingan', 'PostinganController');
+        Route::apiResource('tugas', 'TugasController');
+    });
+
 });
-
-// TEST ROUTE - tambahkan di luar group manapun
-// Route::patch('/test-user-update/{id}', [UserController::class, 'testUpdate']);
