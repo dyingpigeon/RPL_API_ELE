@@ -22,6 +22,14 @@ Route::group([
     Route::post('/reset-password', 'PasswordResetController@reset');
     Route::post('/send-verification', 'VerificationController@sendVerificationCode');
     Route::post('/verify-code', 'VerificationController@verifyCode');
+    Route::get('/test-time', function () {
+        return response()->json([
+            'server_time' => now()->toDateTimeString(),
+            'timezone' => config('app.timezone'),
+            'message' => 'Waktu server sekarang'
+        ]);
+    });
+
 
     // Protected routes (butuh auth dengan token)
     Route::middleware(['auth:sanctum'])->group(function () {
@@ -58,6 +66,13 @@ Route::group([
     Route::post('/reset-password', 'PasswordResetController@reset');
     Route::post('/send-verification', 'VerificationController@sendVerificationCode');
     Route::post('/verify-code', 'VerificationController@verifyCode');
+    Route::get('/test-time', function () {
+        return response()->json([
+            'server_time' => now()->toDateTimeString(),
+            'timezone' => config('app.timezone'),
+            'message' => 'Waktu server sekarang'
+        ]);
+    });
 
     // Protected routes (butuh auth dengan token)
     Route::middleware(['auth:sanctum'])->group(function () {
@@ -83,6 +98,15 @@ Route::group([
         Route::apiResource('mata-kuliah', 'MataKuliahController');
         Route::apiResource('postingan', 'PostinganController');
         Route::apiResource('tugas', 'TugasController');
+
     });
 
+});
+
+Route::get('/test-time', function () {
+    return response()->json([
+        'server_time' => now()->toDateTimeString(),
+        'timezone' => config('app.timezone'),
+        'message' => 'Waktu server sekarang'
+    ]);
 });
