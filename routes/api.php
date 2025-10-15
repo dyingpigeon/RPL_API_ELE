@@ -60,6 +60,30 @@ Route::group([
 ], function () {
 
     // Public routes (tidak butuh auth)
+    Route::post('/logout', 'AuthController@logout');
+    Route::post('/refresh-token', 'AuthController@refresh');
+    Route::get('/check-token', 'AuthController@checkToken');
+
+    // Resource routes dengan controller class (jika ada custom method)
+    Route::apiResource('user', UserController::class);
+    Route::post('user/{user}', [UserController::class, 'update']); // Custom update method
+    // Route::delete('user/{user}/photo', [UserController::class, 'deletePhoto']);
+
+    Route::apiResource('submisi', SubmisiController::class);
+    // Route::post('submisi/{submisi}', [SubmisiController::class, 'update']); // Custom update method
+
+    // Resource routes dengan namespace string
+    Route::apiResource('admin', 'AdminController');
+    Route::apiResource('dosen', 'DosenController');
+    Route::apiResource('jadwal', 'JadwalController');
+    Route::apiResource('krs', 'KrsController');
+    Route::apiResource('mahasiswa', 'MahasiswaController');
+    Route::apiResource('mata-kuliah', 'MataKuliahController');
+    Route::apiResource('postingan', 'PostinganController');
+    Route::apiResource('tugas', 'TugasController');
+
+
+
     Route::post('/registrasi', 'AuthController@register');
     Route::post('/login', 'AuthController@login');
     Route::post('/forgot-password', 'PasswordResetController@forgot');
@@ -72,32 +96,33 @@ Route::group([
             'timezone' => config('app.timezone'),
             'message' => 'Waktu server sekarang'
         ]);
+
     });
 
     // Protected routes (butuh auth dengan token)
     Route::middleware(['auth:sanctum'])->group(function () {
         // Auth management routes
-        Route::post('/logout', 'AuthController@logout');
-        Route::post('/refresh-token', 'AuthController@refresh');
-        Route::get('/check-token', 'AuthController@checkToken');
+        // Route::post('/logout', 'AuthController@logout');
+        // Route::post('/refresh-token', 'AuthController@refresh');
+        // Route::get('/check-token', 'AuthController@checkToken');
 
-        // Resource routes dengan controller class (jika ada custom method)
-        Route::apiResource('user', UserController::class);
-        Route::post('user/{user}', [UserController::class, 'update']); // Custom update method
-        // Route::delete('user/{user}/photo', [UserController::class, 'deletePhoto']);
+        // // Resource routes dengan controller class (jika ada custom method)
+        // Route::apiResource('user', UserController::class);
+        // Route::post('user/{user}', [UserController::class, 'update']); // Custom update method
+        // // Route::delete('user/{user}/photo', [UserController::class, 'deletePhoto']);
 
-        Route::apiResource('submisi', SubmisiController::class);
-        // Route::post('submisi/{submisi}', [SubmisiController::class, 'update']); // Custom update method
+        // Route::apiResource('submisi', SubmisiController::class);
+        // // Route::post('submisi/{submisi}', [SubmisiController::class, 'update']); // Custom update method
 
-        // Resource routes dengan namespace string
-        Route::apiResource('admin', 'AdminController');
-        Route::apiResource('dosen', 'DosenController');
-        Route::apiResource('jadwal', 'JadwalController');
-        Route::apiResource('krs', 'KrsController');
-        Route::apiResource('mahasiswa', 'MahasiswaController');
-        Route::apiResource('mata-kuliah', 'MataKuliahController');
-        Route::apiResource('postingan', 'PostinganController');
-        Route::apiResource('tugas', 'TugasController');
+        // // Resource routes dengan namespace string
+        // Route::apiResource('admin', 'AdminController');
+        // Route::apiResource('dosen', 'DosenController');
+        // Route::apiResource('jadwal', 'JadwalController');
+        // Route::apiResource('krs', 'KrsController');
+        // Route::apiResource('mahasiswa', 'MahasiswaController');
+        // Route::apiResource('mata-kuliah', 'MataKuliahController');
+        // Route::apiResource('postingan', 'PostinganController');
+        // Route::apiResource('tugas', 'TugasController');
 
     });
 
