@@ -1,20 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\VerificationCodeMail;
 
+// Route untuk halaman utama
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', function() {
-    try {
-        Mail::to('the.farhanad123@gmail.com')
-            ->send(new VerificationCodeMail('123456', 'Farhan')); // ← Hapus "App\Mail\"
-        
-        return 'Email dengan template berhasil dikirim!';
-    } catch (\Exception $e) {
-        return 'Error: ' . $e->getMessage();
-    }
+// Route untuk info API v1
+Route::get('/api/v1', function () {
+    return view('api-info', ['version' => 'v1']);
+});
+
+// Route untuk info API v2
+Route::get('/api/v2', function () {
+    return view('api-info', ['version' => 'v2']);
 });
