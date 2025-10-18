@@ -71,6 +71,6 @@
     @endif
 
     <br>
-    <a href="/"><button>Kembali ke Home</button></a>
+    {{-- <a href="/"><button>Kembali ke Home</button></a> --}}
 </body>
 </html>
