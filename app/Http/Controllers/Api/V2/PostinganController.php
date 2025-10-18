@@ -27,9 +27,44 @@ class PostinganController extends Controller
             $query->where('jadwal_id', $request->jadwalId);
         }
 
+        if ($request->has('id')) {
+            $query->where('id', $request->id);  // Exact match untuk ID postingan
+        }
+
         // Filter untuk pencarian (gunakan LIKE)
         if ($request->has('caption')) {
             $query->where('caption', 'like', '%' . $request->caption . '%');
+        }
+
+        // Filter untuk imageUrl (bisa exact match atau null check)
+        if ($request->has('imageUrl')) {
+            if ($request->imageUrl === 'null' || $request->imageUrl === '') {
+                $query->whereNull('image_url');
+            } else {
+                $query->where('image_url', 'like', '%' . $request->imageUrl . '%');
+            }
+        }
+
+        // Filter berdasarkan ada/tidaknya gambar
+        if ($request->has('hasImage')) {
+            if ($request->hasImage === 'true') {
+                $query->whereNotNull('image_url');
+            } elseif ($request->hasImage === 'false') {
+                $query->whereNull('image_url');
+            }
+        }
+
+        // Filter berdasarkan tanggal created_at
+        if ($request->has('tanggal')) {
+            $query->whereDate('created_at', $request->tanggal);
+        }
+
+        if ($request->has('tanggal_dari')) {
+            $query->whereDate('created_at', '>=', $request->tanggal_dari);
+        }
+
+        if ($request->has('tanggal_sampai')) {
+            $query->whereDate('created_at', '<=', $request->tanggal_sampai);
         }
 
         // Default sorting by latest
