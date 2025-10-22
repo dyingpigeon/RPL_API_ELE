@@ -66,8 +66,8 @@ Route::group([
 
     // Resource routes dengan controller class (jika ada custom method)
     Route::apiResource('user', UserController::class);
-    Route::post('user/{user}', [UserController::class, 'update']); // Custom update method
-    // Route::delete('user/{user}/photo', [UserController::class, 'deletePhoto']);
+    Route::post('user/{user}', [UserController::class, 'update']); // Cussatom update method
+    Route::delete('user/{user}/photo', [UserController::class, 'deletePhoto']);
 
     Route::apiResource('submisi', SubmisiController::class);
     // Route::post('submisi/{submisi}', [SubmisiController::class, 'update']); // Custom update method
