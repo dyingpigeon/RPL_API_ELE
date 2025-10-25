@@ -175,7 +175,7 @@ class AuthController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'role' => $user->role,
-                    'photoUrl' => $user->photo_url,
+                    'photoUrl' => $user->photo,
                     'email_verified' => $isVerified,
                 ],
                 $user->role => $extraData,
