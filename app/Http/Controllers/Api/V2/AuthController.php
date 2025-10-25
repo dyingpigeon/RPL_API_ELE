@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V2;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V2\DosenResource;
 use App\Http\Resources\V2\MahasiswaResource;
+use App\Http\Resources\V2\UserResource;
 use App\Models\User;
 use App\Models\Mahasiswa;
 use App\Models\Dosen;
@@ -166,21 +167,17 @@ class AuthController extends Controller
             Carbon::now()->addHours(3) // expires_at
         )->plainTextToken;
 
+        // GUNAKAN UserResource untuk data user
+        $userResource = new UserResource($user);
+
         return response()->json([
             'success' => true,
             'message' => $isVerified ? 'Login berhasil' : 'Login berhasil. Silakan verifikasi email Anda.',
             'data' => [
-                'user' => [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'role' => $user->role,
-                    'photoUrl' => $user->photo,
-                    'email_verified' => $isVerified,
-                ],
+                'user' => $userResource, // ← Pakai UserResource di sini
                 $user->role => $extraData,
                 'token' => $token,
-                'token_expires_at' => Carbon::now()->addHours(3)->toDateTimeString(), // informasi kapan token expired
+                'token_expires_at' => Carbon::now()->addHours(3)->toDateTimeString(),
             ]
         ]);
     }
@@ -256,20 +253,16 @@ class AuthController extends Controller
         $newToken = $request->headers->get('X-New-Token');
         $newTokenExpires = $request->headers->get('X-Token-Expires-At');
 
+        // GUNAKAN UserResource untuk data user
+        $userResource = new UserResource($user);
+
         $responseData = [
             'success' => true,
             'message' => 'Token valid - Auto login berhasil',
             'data' => [
-                'user' => [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'role' => $user->role,
-                    'photoUrl' => $user->photo_url,
-                    'email_verified' => $isVerified,
-                ],
+                'user' => $userResource, // ← Pakai UserResource di sini
                 $user->role => $extraData,
-                'token' => $newToken ?: $request->bearerToken(), // Prioritaskan token baru
+                'token' => $newToken ?: $request->bearerToken(),
                 'token_expires_at' => $newTokenExpires ?: $token->expires_at?->toDateTimeString(),
             ]
         ];
