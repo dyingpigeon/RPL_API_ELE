@@ -22,6 +22,8 @@ class TugasResource extends JsonResource
             'deskripsi' => $this->deskripsi ?? null,
             'fileUrl' => $this->file_url ?? null,
             'deadline' => $this->deadline ?? null,
+            'createdAt' => $this->created_at ? $this->created_at->toDateTimeString() : null,
+            'updatedAt' => $this->updated_at ? $this->updated_at->toDateTimeString() : null,
         ];
     }
 }

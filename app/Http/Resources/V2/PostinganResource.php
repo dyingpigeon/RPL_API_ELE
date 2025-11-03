@@ -16,10 +16,12 @@ class PostinganResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'dosenId' => $this->dosen_id,  // foreign key ke dosen
-            'jadwalId' => $this->jadwal_id,  // foreign key ke dosen
+            'dosenId' => $this->dosen_id,      // foreign key ke dosen
+            'jadwalId' => $this->jadwal_id,    // foreign key ke jadwal
             'caption' => $this->caption ?? null,
             'imageUrl' => $this->image_url ?? null,
+            'createdAt' => $this->created_at ? $this->created_at->toDateTimeString() : null,
+            'updatedAt' => $this->updated_at ? $this->updated_at->toDateTimeString() : null,
         ];
     }
 }
