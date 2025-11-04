@@ -22,12 +22,12 @@ class SubmisiController extends Controller
 
         // filter berdasarkan mahasiswa_id
         if ($request->has('mahasiswaId')) {
-            $query->where('mahasiswa_id', $request->mahasiswa_id);
+            $query->where('mahasiswa_id', $request->mahasiswaId);
         }
 
         // filter berdasarkan tugas_id
         if ($request->has('tugasId')) {
-            $query->where('tugas_id', $request->tugas_id);
+            $query->where('tugas_id', $request->tugasId);
         }
 
         // filter berdasarkan nilai (misalnya >= nilai tertentu)
